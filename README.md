@@ -10,14 +10,14 @@
 
 ### Up & Running
 
-If you successfully installed Docker or already have it on your machine, you should be able to get started with the app with,
+If you successfully installed Docker or already have it on your machine, you can get started with,
 
 ```
 git clone git@github.com:aedenj/the-knock-challenge.git ~/projects/the-knock-challenge
 cd ~/projects/the-knock-challenge/;docker-compose up app mongo
 ```
 
-You can explore the various endpoints using
+You can explore the various endpoints using,
 
 
 #### POST /thread
@@ -35,3 +35,20 @@ curl -d '{"message": "Hey Aeden"}' -H "Content-Type: application/json" -X POST h
 ```
 curl -d '{"message": "Hey Everyone"}' -H "Content-Type: application/json" -X POST http://localhost:3000/thread/1/kiefer
 ```
+
+#### GET /thread/:thread_id
+```
+curl -H "Content-Type: application/json" http://localhost:3000/thread/1
+```
+
+
+### Testing
+
+Since I did the database bonus I opted to take a more end-to-end testing approach for this MVP as opposed to mock heavy unit testing.
+
+With the mongo container still up you can simply run,
+
+```
+docker-compose up tests
+```
+
