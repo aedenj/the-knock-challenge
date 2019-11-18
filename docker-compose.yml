@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  app:
+    image: node:alpine
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+    working_dir: /app
+    environment:
+      NODE_ENV: dev
+    command: sh -c "npm install;npm run dev"
+    depends_on:
+      - mongo
+
+  tests:
+    image: node:alpine
+    volumes:
+      - ./:/app
+    working_dir: /app
+    environment:
+      NODE_ENV: test
+    command: sh -c "npm run test"
+    depends_on:
+      - app
+      - mongo
+    expose:
+      - 27017
+
+  mongo:
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    expose:
+      - 27017
