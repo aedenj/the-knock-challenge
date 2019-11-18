@@ -24,3 +24,14 @@ You can explore the various endpoints using
 ```
 curl -d '{"users":["kiefer", "jeff_goldblum", "aeden"]}' -H "Content-Type: application/json" -X POST http://localhost:3000/thread
 ```
+
+#### POST /thread/:thread_id/:username
+```
+curl -d '{"message": "Hey Jeff"}' -H "Content-Type: application/json" -X POST http://localhost:3000/thread/1/aeden
+```
+```
+curl -d '{"message": "Hey Aeden"}' -H "Content-Type: application/json" -X POST http://localhost:3000/thread/1/jeff_goldblum
+```
+```
+curl -d '{"message": "Hey Everyone"}' -H "Content-Type: application/json" -X POST http://localhost:3000/thread/1/kiefer
+```

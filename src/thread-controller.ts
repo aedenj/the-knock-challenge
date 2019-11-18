@@ -69,8 +69,6 @@ export const createMessage = async (req: Request, res: Response) => {
     } catch (ex) {
       res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({ errors: ex})
     }
-
-    res.sendStatus(HttpStatus.OK)
   }
 }
 
