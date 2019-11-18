@@ -14,6 +14,13 @@ services:
     depends_on:
       - mongo
 
+  mongo:
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    expose:
+      - 27017
+
   tests:
     image: node:alpine
     volumes:
@@ -25,12 +32,4 @@ services:
     depends_on:
       - app
       - mongo
-    expose:
-      - 27017
 
-  mongo:
-    image: mongo
-    volumes:
-      - ./data:/data/db
-    expose:
-      - 27017

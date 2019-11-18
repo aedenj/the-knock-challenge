@@ -17,7 +17,7 @@ git clone git@github.com:aedenj/the-knock-challenge.git ~/projects/the-knock-cha
 cd ~/projects/the-knock-challenge/;docker-compose up app mongo
 ```
 
-You can explore the various endpoints using,
+Wait just a couple moments for the app to start then you can explore the various endpoints using,
 
 
 #### POST /thread
@@ -46,9 +46,9 @@ curl -H "Content-Type: application/json" http://localhost:3000/thread/1
 
 Since I did the database bonus I opted to take a more end-to-end testing approach for this MVP as opposed to mock heavy unit testing.
 
-With the mongo container still up you can simply run,
+In a terminal lets run
 
 ```
-docker-compose up tests
+cd ~/projects/the-knock-challenge/;docker-compose down
+docker-compose up tests mongo
 ```
-

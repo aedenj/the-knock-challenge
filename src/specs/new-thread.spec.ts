@@ -25,24 +25,24 @@ describe('POST /thread', () => {
   });
 
   describe('without a users property', () => {
-    it('returns 422', async () => {
+    it('returns bad request', async () => {
       let res = await request(app).post('/thread')
 
       expect(res.body.errors[0].param).toEqual('users')
       expect(res.body.errors[0].msg).toEqual('Provide an array of at least one user.')
-      expect(res.status).toEqual(422)
+      expect(res.status).toEqual(HttpStatus.BAD_REQUEST)
     })
   })
 
   describe('with an empty users array', () => {
-    it('returns 422', async () => {
+    it('returns bad request', async () => {
       let res = await request(app)
         .post('/thread')
         .send({'users':[]})
 
       expect(res.body.errors[0].param).toEqual('users')
       expect(res.body.errors[0].msg).toEqual('Provide an array of at least one user.')
-      expect(res.status).toEqual(422)
+      expect(res.status).toEqual(HttpStatus.BAD_REQUEST)
     })
   })
 
@@ -52,7 +52,7 @@ describe('POST /thread', () => {
         .post('/thread')
         .send({'users':['what']})
 
-      expect(res.status).toEqual(200)
+      expect(res.status).toEqual(HttpStatus.OK)
     })
   })
 
@@ -62,26 +62,39 @@ describe('POST /thread', () => {
         .post('/thread')
         .send({'users':['what', 'are', 'we', 'talking', 'about']})
 
-      expect(res.status).toEqual(200)
+      expect(res.status).toEqual(HttpStatus.OK)
     })
   })
 
   describe('with excessive spaces around user names', () => {
-    it('starts a new message thread', async () => {
-      let users = {'users':['  what', ' are  ', ' we', ' talking ', 'about']}
+    it('returns bad request', async () => {
+      let users = {'users':['what', ' are  ', ' we', ' talking ', 'about']}
       let res = await request(app)
         .post('/thread')
         .send(users)
-      let thread = await db.collection('threads').findOne({ id: parseInt(res.body.thread_id)})
 
-      expect(thread.name).toEqual('what,are,we,talking,about')
-      expect(res.status).toEqual(200)
+      expect(res.body.errors[0].param).toEqual('users')
+      expect(res.body.errors[0].msg).toEqual('Names can only contain alphanumerics, \"_\", and \"-\"')
+      expect(res.status).toEqual(HttpStatus.BAD_REQUEST)
+    })
+  })
+
+  describe('with non-alpanumeric characters', () => {
+    it('returns bad request', async () => {
+      let users = {'users':[',,what']}
+      let res = await request(app)
+        .post('/thread')
+        .send(users)
+
+      expect(res.body.errors[0].param).toEqual('users')
+      expect(res.body.errors[0].msg).toEqual('Names can only contain alphanumerics, \"_\", and \"-\"')
+      expect(res.status).toEqual(HttpStatus.BAD_REQUEST)
     })
   })
 
   describe('with an existing user thread', () => {
     it('returns the id of the existing thread', async () => {
-      let users = {'users':['  what', ' are  ', ' we', ' talking ', 'about']}
+      let users = {'users':['what', 'are', 'we', 'talking', 'about']}
       let firstReq = await request(app)
         .post('/thread')
         .send(users)

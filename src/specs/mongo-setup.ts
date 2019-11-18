@@ -1,2 +1,2 @@
-export const { MONGOURI = 'mongodb://mongo:27017/' } = process.env
+export const { MONGOURI = 'mongodb://testmongo:27017/' } = process.env
 

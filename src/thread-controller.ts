@@ -6,7 +6,7 @@ import HttpStatus from 'http-status-codes'
 
 export const createThread = async (req: Request, res: Response) => {
   const valid = async (val:string[]) => {
-      let areValidNames = val.every((s:string) => { return /[\w-]+/.test(s) })
+      let areValidNames = val.every((s:string) => { return /^[\w-]+$/.test(s) })
       if (!areValidNames)
         throw new Error('Names can only contain alphanumerics, "_", and "-"')
 
@@ -17,7 +17,7 @@ export const createThread = async (req: Request, res: Response) => {
 
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({ errors: errors.array() })
+    res.status(HttpStatus.BAD_REQUEST).json({ errors: errors.array() })
   } else {
     try {
       let canonicalName = req.body.users.join(',')
