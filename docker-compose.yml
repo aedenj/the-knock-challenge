@@ -28,8 +28,7 @@ services:
     working_dir: /app
     environment:
       NODE_ENV: test
-    command: sh -c "npm run test"
+    #command: sh -c "npm run test"
     depends_on:
-      - app
       - mongo
 

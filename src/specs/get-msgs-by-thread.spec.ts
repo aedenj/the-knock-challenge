@@ -5,17 +5,18 @@ import { MONGOURI } from './mongo-setup'
 import HttpStatus from 'http-status-codes'
 
 
-describe('GET /thread/:thread_id', () => {
-  let connection: MongoClient;
-  let db: Db;
+let connection: MongoClient;
+let db: Db;
 
-  beforeAll(async () => {
-    connection = await MongoClient.connect(MONGOURI, {
-      useNewUrlParser: true,
-    });
-    db = await connection.db("sms");
+beforeAll(async () => {
+  connection = await MongoClient.connect(MONGOURI, {
+    useNewUrlParser: true,
   });
+  db = await connection.db("sms");
+  db.collection('threads').remove({})
+});
 
+describe('GET /thread/:thread_id', () => {
   afterEach(async () => {
     db.collection('threads').remove({})
   })

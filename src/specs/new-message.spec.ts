@@ -4,17 +4,18 @@ import { MongoClient, Db } from 'mongodb'
 import { MONGOURI } from './mongo-setup'
 import HttpStatus from 'http-status-codes'
 
-describe('POST /thread/:thread_id/:username', () => {
-  let connection: MongoClient;
-  let db: Db;
+let connection: MongoClient;
+let db: Db;
 
-  beforeAll(async () => {
-    connection = await MongoClient.connect(MONGOURI, {
-      useNewUrlParser: true,
-    });
-    db = await connection.db("sms");
+beforeAll(async () => {
+  connection = await MongoClient.connect(MONGOURI, {
+    useNewUrlParser: true,
   });
+  db = await connection.db("sms");
+  db.collection('threads').remove({})
+});
 
+describe('POST /thread/:thread_id/:username', () => {
   afterEach(async () => {
     db.collection('threads').remove({})
   })
