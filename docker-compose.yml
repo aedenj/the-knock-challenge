@@ -16,6 +16,8 @@ services:
 
   mongo:
     image: mongo
+    logging:
+      driver: none
     volumes:
       - ./data:/data/db
     expose:
@@ -28,7 +30,7 @@ services:
     working_dir: /app
     environment:
       NODE_ENV: test
-    #command: sh -c "npm run test"
+    command: sh -c "npm run test"
     depends_on:
       - mongo
 

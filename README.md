@@ -50,5 +50,5 @@ In a terminal lets run
 
 ```
 cd ~/projects/the-knock-challenge/;docker-compose down
-docker-compose up tests mongo
+rm -rf ./data;docker-compose run tests npm run test
 ```

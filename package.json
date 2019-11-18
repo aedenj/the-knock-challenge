@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --coverage",
+    "test": "jest --watchAll --coverage --runInBand",
     "dev": "./node_modules/.bin/tsc-watch --onSuccess \"node ./dist/server.js\""
   },
   "keywords": [],
