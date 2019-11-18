@@ -2,6 +2,7 @@
 .idea/
 .vscode/
 node_modules/
+data/
 dist/
 tmp/
 temp/
